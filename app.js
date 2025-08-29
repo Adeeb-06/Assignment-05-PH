@@ -69,7 +69,7 @@ cardContainer.innerHTML = cardsData
                     <div class="logo absolute h-full w-full ${card.color} opacity-5 p-2 rounded-md"></div>
                     <img class="w-[25px] h-[25px] relative" src="${card.logo}" alt="">
                 </div>
-                <img class="w-[20px] h-[20px]" src="${card.heart}" alt="">
+                <img class="w-[20px] heart h-[20px]" src="${card.heart}" alt="">
             </div>
             <div class="heading mt-3">
                 <h2 class="font-bold text-[18px]">${card.title}</h2>
@@ -94,3 +94,89 @@ cardContainer.innerHTML = cardsData
   `
   )
   .join("");
+
+
+let hearts = 0
+let heartsCount = document.querySelector('.hearts')
+heartsCount.innerHTML = hearts
+
+document.querySelectorAll('.heart').forEach(heart => {
+  heart.addEventListener('click', () => {
+    hearts++
+    heartsCount.innerHTML = hearts
+  })
+})
+
+
+let coin = document.querySelector('.coin')
+coin.innerHTML = 100
+
+
+let callHistory = [
+   { name: '',
+    number: '',
+    time: ''}
+]
+
+
+
+
+document.querySelectorAll('.call').forEach((callBtn, index) => {
+  const card = cardsData[index]
+  callBtn.addEventListener('click', () => {
+    if (parseInt(coin.innerHTML) < 20) {
+      alert('Not enough coins to make a call. Each call costs 20 coins.')
+      return
+    }
+    alert(`Calling ${card.title} at number: ${card.number}`);
+    callHistory.push({
+      name: card.title,
+      number: card.number,
+      time: new Date().toLocaleTimeString()
+    })
+    let callHistoryContainer = document.querySelector('.call-history')
+
+    callHistoryContainer.innerHTML = callHistory.map((call, index) => {
+        if(call.name === ''){
+            return ''
+        }
+      return `
+        <div class="card-history flex gap-3 items-center justify-between bg-[#f5fff6] w-full  rounded-[10px] p-3 mt-3">
+            <div class="left">
+                <h1 class="text-[17px] font-bold">${call.name}</h1>
+                <h2>${call.number}</h2>
+            </div>
+            <div class="right">
+                <h2>${call.time}</h2>
+            </div>
+        </div>
+      `
+    })
+    coin.innerHTML = parseInt(coin.innerHTML) - 20
+  })
+})
+
+let callHistoryContainer = document.querySelector('.call-history')
+
+callHistoryContainer.innerHTML = callHistory.map((call, index) => {
+    if(call.name === ''){
+        return ''
+    }
+  return `
+    <div class="card-history flex gap-3 items-center justify-between bg-[#f5fff6] w-full  rounded-[10px] p-3 mt-3">
+        <div class="left">
+            <h1 class="text-[19px] font-bold">${call.name}</h1>
+            <h2>${call.number}</h2>
+        </div>
+        <div class="right">
+            <h2>${call.time}</h2>
+        </div>
+    </div>
+  `
+})
+
+let clearBtn = document.querySelector('.clear-btn')
+clearBtn.addEventListener('click', () => {
+  callHistory = []
+  callHistoryContainer.innerHTML = ''
+})
