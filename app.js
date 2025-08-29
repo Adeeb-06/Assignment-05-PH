@@ -90,7 +90,7 @@ const cardsData = [
 cardContainer.innerHTML = cardsData
     .map(
         (card) => `
-    <div class="card h-[270px] w-[30%] bg-white shadow-lg rounded-lg p-5 m-3">
+    <div class="card lg:h-[270px] lg:w-[30%] w-[100%] bg-white shadow-lg rounded-lg p-5 m-3">
         <div class="top">
             <div class="logoandheart items-center flex justify-between">
                 <div class="lgo p-3 relative flex items-center justify-center rounded-md">
