@@ -83,7 +83,7 @@ cardContainer.innerHTML = cardsData
             </span>
         </div>
         <div class="bottom flex justify-center gap-2">
-            <div class="coppy w-[50%]">
+            <div class="copy w-[50%]">
                 <button class=" border-[1px] py-[2px] text-black w-full px-4 rounded-md mt-5">Copy</button>
             </div>
             <div class="call w-[50%]">
@@ -180,3 +180,28 @@ clearBtn.addEventListener('click', () => {
   callHistory = []
   callHistoryContainer.innerHTML = ''
 })
+
+
+let copyCountSpan = document.querySelector('.copy-count')
+let copyCount = 0
+let copyCountBtn = document.querySelector('.copy')
+copyCountSpan.innerHTML = copyCount
+
+document.querySelectorAll('.copy').forEach((copyBtn, index) => {
+  const card = cardsData[index]
+  copyBtn.addEventListener('click', () => {
+    copyCount++
+    copyCountSpan.innerHTML = copyCount
+     const textToCopy = card.number;
+
+    // Use Clipboard API to copy
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        alert(`Copied: ${textToCopy}`);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  })
+})
+
